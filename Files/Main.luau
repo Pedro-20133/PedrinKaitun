@@ -13,13 +13,13 @@ end
 
 -- Tabela central de módulos
 local Modules = {
-	GetCdk           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetCdk.luau"),
-	GetTtk           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetTtk.luau"),
-	GetGh            = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetGh.luau"),
-	GetHumanFullV4   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetHumanFullV4.luau"),
-	GetMiticalFruit  = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetMiticalFruit.luau"),
-	GetSoulGuitar    = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetSoulGuitar.luau"),
-	GetLv2800        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetLv2800.luau"),
+	GetCdk           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetCdk.luau"),
+	GetTtk           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetTtk.luau"),
+	GetGh            = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetGh.luau"),
+	GetHumanFullV4   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetHumanFullV4.luau"),
+	GetMiticalFruit  = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetMiticalFruit.luau"),
+	GetSoulGuitar    = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetSoulGuitar.luau"),
+	GetLv2800        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependencies/GetLv2800.luau"),
 
 	GetSkills        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetSkills.luau"),
 	GetMoney         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetMoney.luau"),
@@ -32,7 +32,7 @@ local Modules = {
 	AutoCods         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoCods.luau"),
 	Security         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/Security.luau"),
 
-	Rayfield        = import("https://sirius.menu/rayfield")
+	Rayfield         = import("https://sirius.menu/rayfield")
 }
 
 -- Validação: verifica se algum módulo essencial não retornou nada
@@ -44,51 +44,50 @@ for name, mod in pairs(Modules) do
 	end
 end
 
--- Vars
+-- Inicializa a tabela de variáveis globais caso não exista
+_G.Vars = _G.Vars or {}
 _G.Vars.TweenSpeed = 200
 
 -- Abrindo window
 local Rayfield = Modules.Rayfield
 local Window = Modules.Rayfield:CreateWindow({
 	Name = "Pedrin Kaitun",
-	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+	Icon = 0,
 	LoadingTitle = "Pedrin Kaitun",
 	LoadingSubtitle = "by Pedro",
-	ShowText = "Rayfield", -- for mobile users to unhide Rayfield, change if you'd like
-	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+	ShowText = "Rayfield",
+	Theme = "Default",
 
-	ToggleUIKeybind = "K", -- The keybind to toggle the UI visibility (string like "K" or Enum.KeyCode)
+	ToggleUIKeybind = "K",
 
 	DisableRayfieldPrompts = false,
-	DisableBuildWarnings = false, -- Prevents Rayfield from emitting warnings when the script has a version mismatch with the interface.
-
-	-- ScriptID = "sid_xxxxxxxxxxxx", -- Your Script ID from developer.sirius.menu — enables analytics, managed keys, and script hosting
+	DisableBuildWarnings = false,
 
 	ConfigurationSaving = {
 		Enabled = true,
-		FolderName = nil, -- Create a custom folder for your hub/game
+		FolderName = nil,
 		FileName = "Pedrin Kaitun"
 	},
 
 	Discord = {
-		Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
-		Invite = "noinvitelink", -- The Discord invite code, do not include Discord.gg/. E.g. Discord.gg/ABCD would be ABCD
-		RememberJoins = true -- Set this to false to make them join the Discord every time they load it up
+		Enabled = false,
+		Invite = "noinvitelink",
+		RememberJoins = true
 	},
 
-	KeySystem = false, -- Set this to true to use our key system
+	KeySystem = false,
 	KeySettings = {
 		Title = "Untitled",
 		Subtitle = "Key System",
-		Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
-		FileName = "Key", -- It is recommended to use something unique, as other scripts using Rayfield may overwrite your key file
-		SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-		Key = {"Hello"} -- List of keys that the system will accept, can be RAW file links (pastebin, github, etc.) or simple strings ("hello", "key22")
+		Note = "No method of obtaining the key is provided",
+		FileName = "Key",
+		SaveKey = true,
+		GrabKeyFromSite = false,
+		Key = {"Hello"}
 	}
 })
 
-local Tab = Window:CreateTab("Main", nil) -- Title, Image
+local Tab = Window:CreateTab("Main", nil)
 
 local TweenSpeedSlider = Tab:CreateSlider({
 	Name = "Tween Speed",
@@ -96,7 +95,7 @@ local TweenSpeedSlider = Tab:CreateSlider({
 	Increment = 50,
 	Suffix = "Tween speed",
 	CurrentValue = 200,
-	Flag = "TweenSpeed", -- A flag is the identifier for the configuration file; make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Flag = "TweenSpeed",
 	Callback = function(Value)
 		_G.Vars.TweenSpeed = Value
 	end,
