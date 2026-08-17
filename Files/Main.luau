@@ -1,3 +1,13 @@
+if _G.Configs.Key ~= "Key" then
+	local player = game.Players.LocalPlayer
+	player:Kick("Key inválida!")
+end
+
+if game.PlaceId ~= 2753915549 or game.PlaceId ~= 4442272183 or game.PlaceId ~= 7449423635 then
+	local player = game.Players.LocalPlayer
+	player:Kick("Jogo sem suporte!")
+end
+
 -- Função auxiliar segura para carregar os arquivos
 local function import(url)
 	local success, result = pcall(function()
@@ -46,10 +56,10 @@ end
 
 -- Abrindo window
 local Window = Modules.Rayfield:CreateWindow({
-	Name = "Rayfield Example Window",
+	Name = "Pedrin Kaitun",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-	LoadingTitle = "Rayfield Interface Suite",
-	LoadingSubtitle = "by Sirius",
+	LoadingTitle = "Pedrin Kaitun",
+	LoadingSubtitle = "by Pedro",
 	ShowText = "Rayfield", -- for mobile users to unhide Rayfield, change if you'd like
 	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -63,7 +73,7 @@ local Window = Modules.Rayfield:CreateWindow({
 	ConfigurationSaving = {
 		Enabled = true,
 		FolderName = nil, -- Create a custom folder for your hub/game
-		FileName = "Big Hub"
+		FileName = "Pedrin Kaitun"
 	},
 
 	Discord = {
