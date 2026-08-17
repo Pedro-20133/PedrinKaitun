@@ -3,7 +3,7 @@ if _G.Configs.Key ~= "Key" then
 	player:Kick("Key inválida!")
 end
 
-if game.PlaceId ~= 2753915549 or game.PlaceId ~= 4442272183 or game.PlaceId ~= 7449423635 then
+if game.PlaceId ~= 2753915549 and game.PlaceId ~= 4442272183 and game.PlaceId ~= 7449423635 then
 	local player = game.Players.LocalPlayer
 	player:Kick("Jogo sem suporte!")
 end
