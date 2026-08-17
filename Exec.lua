@@ -13,7 +13,8 @@ _G.Configs = { -- Exemple
 	["GetGh"] = true,
 	["GetHumanFullV4"] = true,
 	["GetMiticalFruit"] = true,
-	["GetSoulGuitar"] = true
+	["GetSoulGuitar"] = true,
+	["GetSkills"] = true
 }
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Main.luau"))()
