@@ -1,13 +1,15 @@
+repeat wait() until game:IsLoaded()
+
 _G.Configs = { -- Exemple
 	["Team"] = "Pirates",
-	
+
 	["Key"] = "KeyExemple", -- Optional
 	["Webhook"] = "WebhookExemple", -- Optional
-	
+
 	["LevelTarget"] = 2800,
 	["MoneyTarget"] = 100000,
 	["FragTarget"] = 1500,
-	
+
 	["GetCdk"] = true,
 	["GetTtk"] = false,
 	["GetGh"] = true,
