@@ -4,16 +4,6 @@ if _G.Configs.Key ~= "Key" then
 	player:Kick("Key inválida!")
 end
 
-local seasValidos = {
-	[2753915549] = true,
-	[4442272183] = true,
-	[7449423635] = true
-}
-
-if not seasValidos[game.PlaceId] then
-	game.Players.LocalPlayer:Kick("Jogo sem suporte!")
-end
-
 -- Função auxiliar segura para carregar os arquivos
 local function import(url)
 	local success, result = pcall(function()
