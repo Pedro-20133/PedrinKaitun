@@ -13,24 +13,24 @@ end
 
 -- Tabela central de módulos
 local Modules = {
-	GetCdk          = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetCdk.luau"),
-	GetTtk          = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetTtk.luau"),
-	GetGh           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetGh.luau"),
-	GetHumanFullV4  = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetHumanFullV4.luau"),
-	GetMiticalFruit = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetMiticalFruit.luau"),
-	GetSoulGuitar   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetSoulGuitar.luau"),
-	GetLv2800       = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetLv2800.luau"),
+	GetCdk           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetCdk.luau"),
+	GetTtk           = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetTtk.luau"),
+	GetGh            = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetGh.luau"),
+	GetHumanFullV4   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetHumanFullV4.luau"),
+	GetMiticalFruit  = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetMiticalFruit.luau"),
+	GetSoulGuitar    = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetSoulGuitar.luau"),
+	GetLv2800        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Dependences/GetLv2800.luau"),
 
-	GetSkills       = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetSkills.luau"),
-	GetMoney        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetMoney.luau"),
-	GetFrag         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetFrag.luau"),
-	FpsBooter       = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/FpsBooter.luau"),
-	ServerHop       = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/ServerHop.luau"),
-	AutoSelectTeam  = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoSelectTeam.luau"),
-	AutoRandomFruits= import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoRandomFruits.luau"),
-	AutoQuestsSeas  = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoQuestsSeas.luau"),
-	AutoCods        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoCods.luau"),
-	Security        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/Security.luau"),
+	GetSkills        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetSkills.luau"),
+	GetMoney         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetMoney.luau"),
+	GetFrag          = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetFrag.luau"),
+	FpsBooter        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/FpsBooter.luau"),
+	ServerHop        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/ServerHop.luau"),
+	AutoSelectTeam   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoSelectTeam.luau"),
+	AutoRandomFruits = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoRandomFruits.luau"),
+	AutoQuestsSeas   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoQuestsSeas.luau"),
+	AutoCods         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoCods.luau"),
+	Security         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/Security.luau"),
 
 	Rayfield        = import("https://sirius.menu/rayfield")
 }
@@ -44,7 +44,11 @@ for name, mod in pairs(Modules) do
 	end
 end
 
+-- Vars
+_G.Vars.TweenSpeed = 200
+
 -- Abrindo window
+local Rayfield = Modules.Rayfield
 local Window = Modules.Rayfield:CreateWindow({
 	Name = "Pedrin Kaitun",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -84,11 +88,24 @@ local Window = Modules.Rayfield:CreateWindow({
 	}
 })
 
-local Tab = Window:CreateTab("Tab Example", 4483362458) -- Title, Image
+local Tab = Window:CreateTab("Main", nil) -- Title, Image
 
-local Button = Tab:CreateButton({
-	Name = "Button Example",
+local TweenSpeedSlider = Tab:CreateSlider({
+	Name = "Tween Speed",
+	Range = {150, 1000},
+	Increment = 50,
+	Suffix = "Tween speed",
+	CurrentValue = 200,
+	Flag = "TweenSpeed", -- A flag is the identifier for the configuration file; make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		_G.Vars.TweenSpeed = Value
+	end,
+})
+
+local ExitBtn = Tab:CreateButton({
+	Name = "Exit Button",
 	Callback = function()
-		Modules.Rayfield:Destroy()
+		Rayfield:SetVisibility(false)
+		Rayfield:Destroy()
 	end,
 })
