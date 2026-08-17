@@ -1,9 +1,3 @@
-local player = game.Players.LocalPlayer
-
-if _G.Configs.Key ~= "Key" then
-	player:Kick("Key inválida!")
-end
-
 -- Função auxiliar segura para carregar os arquivos
 local function import(url)
 	local success, result = pcall(function()
