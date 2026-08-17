@@ -1,11 +1,17 @@
+local player = game.Players.LocalPlayer
+
 if _G.Configs.Key ~= "Key" then
-	local player = game.Players.LocalPlayer
 	player:Kick("Key inválida!")
 end
 
-if game.PlaceId ~= 2753915549 and game.PlaceId ~= 4442272183 and game.PlaceId ~= 7449423635 then
-	local player = game.Players.LocalPlayer
-	player:Kick("Jogo sem suporte!")
+local seasValidos = {
+	[2753915549] = true,
+	[4442272183] = true,
+	[7449423635] = true
+}
+
+if not seasValidos[game.PlaceId] then
+	game.Players.LocalPlayer:Kick("Jogo sem suporte!")
 end
 
 -- Função auxiliar segura para carregar os arquivos
