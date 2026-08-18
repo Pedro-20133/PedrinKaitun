@@ -46,10 +46,38 @@ end
 
 -- Inicializa a tabela de variáveis globais caso não exista
 _G.Vars = _G.Vars or {}
-_G.Vars.TweenSpeed = 200
+_G.Vars.TweenSpeed       = 200
+
+_G.Vars.haveCdk          = false
+_G.Vars.haveTtk          = false
+_G.Vars.haveGh           = false
+_G.Vars.haveHumanFullV4  = false
+_G.Vars.haveMiticalFruit = false
+_G.Vars.haveSoulGuitar   = false
+_G.Vars.haveSkills       = false
+
+_G.Vars.Money            = 0
+_G.Vars.Frag             = 0
+_G.Vars.Level            = 1
+_G.Vars.Fruit            = ""
+
+_G.Vars.Skills.Haki      = false
+_G.Vars.Skills.Obs       = false
+_G.Vars.Skills.Soru      = false
+_G.Vars.Skills.PuloNoAr  = false
+
+_G.Vars.Status.Melee     = 1
+_G.Vars.Status.Defensa   = 1
+_G.Vars.Status.Espada    = 1
+_G.Vars.Status.Arma      = 1
+_G.Vars.Status.BloxFruit = 1
+
+-- Função auxiliar para obter status
+local function getAllVars()
+	
+end
 
 -- Abrindo window
-local Rayfield = Modules.Rayfield
 local Window = Modules.Rayfield:CreateWindow({
 	Name = "Pedrin Kaitun",
 	Icon = 0,
@@ -101,10 +129,82 @@ local TweenSpeedSlider = Tab:CreateSlider({
 	end,
 })
 
+local KickBtn = Tab:CreateButton({
+	Name = "Kick Button",
+	Callback = function()
+		player:Kick("Você foi kickado por você mesmo.")
+	end,
+})
+
 local ExitBtn = Tab:CreateButton({
 	Name = "Exit Button",
 	Callback = function()
-		Rayfield:SetVisibility(false)
-		Rayfield:Destroy()
+		Modules.Rayfield:SetVisibility(false)
+		Modules.Rayfield:Destroy()
+		
+		task.cancel()
+		error()
 	end,
 })
+
+-- Init
+task.spawn(function()
+	while true do
+		local hasAdmin = Modules.Security:VerifyAdmin()
+		if hasAdmin then player:Kick("Um admin entrou no server.") end
+		
+		wait()
+	end
+end)
+
+if _G.Configs.Team == "Marines" then
+	Modules.AutoSelectTeam:SelectMarines()
+elseif _G.Configs.Team == "Pirates" then
+	Modules.AutoSelectTeam:SelectPirates()
+else
+	player:Kick("Você não tem team especificado no _G.Configs.")
+end
+
+wait(1)
+
+if _G.Configs.FpsBoost then
+	Modules.FPSBoost:Enable()
+end
+
+wait()
+
+if _G.Vars.Level <= 700 then
+	if _G.Configs.LevelTarget < 700 then
+		Modules.AutoLevel:FarmLevel(_G.Configs.LevelTarget)
+	else
+		Modules.AutoLevel:FarmLevel(700)
+	end
+
+	wait(0.5)
+
+	Modules.AutoQuestsSeas:StartSecondQuest()
+end
+
+if _G.Vars.Level <= 1500 then
+	if _G.Configs.LevelTarget < 1500 then
+		Modules.AutoLevel:FarmLevel(_G.Configs.LevelTarget)
+	else
+		Modules.AutoLevel:FarmLevel(1500)
+	end
+
+	wait(0.5)
+
+	Modules.AutoQuestsSeas:StartThirdQuest()
+end
+
+if _G.Vars.Level <= 2800 then
+	if _G.Configs.LevelTarget < 2800 then
+		Modules.AutoLevel:FarmLevel(_G.Configs.LevelTarget)
+	else
+		Modules.AutoLevel:FarmLevel(2800)
+	end
+
+	wait(0.5)
+
+	Modules.AutoQuestsSeas:StartThirdQuest()
+end
