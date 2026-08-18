@@ -80,6 +80,10 @@ _G.Server.IsSea3         = false
 _G.Server.IsFullMoon     = false
 
 -- Função auxiliar para obter status
+local function getVerificarVars()
+
+end
+
 local function getAllVars()
 	
 end
@@ -283,12 +287,17 @@ if not _G.Vars.haveGh then
 		Modules.GetGh:BuyWaterKungfu()
 	else
 		Modules.GetMoney:Farm(1450000)
+		
+		Modules.GetGh:BuyBlackLeg()
+		Modules.GetGh:BuyEletric()
+		Modules.GetGh:BuyWaterKungfu()
 	end
 	
 	if _G.Vars.Frag >= 1500 then
 		Modules.GetGh:BuyDragonBreath()
 	else
 		Modules.GetFrag:Farm(1500)
+		Modules.GetGh:BuyDragonBreath()
 	end
 	
 	-- Uppar estilos v1
@@ -307,7 +316,65 @@ if not _G.Vars.haveGh then
 	wait(1)
 	
 	-- Comprar estilos v2
+	Modules.ServerHop:HopToSea2()
 	
+	Modules.GetGh:AutoQuestBl()
+	wait(1)
+	Modules.GetGh:AutoQuestWf()
+	wait(1)
+	
+	Modules.ServerHop:HopToSea3()
+	
+	Modules.GetGh:AutoQuestEl()
+	wait(1)
+	Modules.GetGh:AutoQuestDb()
+	wait(1)
+	
+	if _G.Vars.Money >= 14000000 and _G.Vars.Frag >= 20000 then
+		Modules.GetGh:BuySuperHuman()
+		Modules.GetGh:BuyDeathStep()
+		Modules.GetGh:BuyEletricClaw()
+		Modules.GetGh:BuyWaterKarate()
+		Modules.GetGh:BuyDragonTalon()
+	else
+		Modules.GetMoney:Farm(14000000)
+		Modules.GetFrag:Farm(20000)
+	end
+	
+	-- Uppar estilos v2
+	Modules.GetGh:BuySuperHuman()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyDeathStep()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyEletricClaw()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyWaterKarate()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyDragonTalon()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	
+	if not Modules.GetGh:HaveItens()then
+		Modules.GetGh:GetItensGh()
+		wait(1)
+	end
+	
+	if _G.Vars.Money >= 5000000 and _G.Vars.Frag >= 5000 then
+		Modules.GetGh:BuyGodHuman()
+		Modules.GetMastery.EstiloLuta:Farm(600)
+		wait(1)
+	else
+		Modules.GetMoney:Farm(5000000)
+		Modules.GetFrag:Farm(5000)
+		
+		Modules.GetGh:BuyGodHuman()
+		Modules.GetMastery.EstiloLuta:Farm(600)
+		wait(1)
+	end
 end
 
 wait(1)
@@ -343,3 +410,13 @@ if not _G.Vars.haveCdk then
 end
 
 wait(1)
+
+Modules.GetMoney:Farm(_G.Configs.MoneyTarget)
+Modules.GetFrag:Farm(_G.Configs.FragTarget)
+
+-- Verificar tudo
+if not getVerificarVars() then
+	player:Kick("Algo deu errado, reset o script para verificar novamente")
+else
+	player:Kick("Sua conta está pronta!!")
+end
