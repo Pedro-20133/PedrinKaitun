@@ -24,6 +24,7 @@ local Modules = {
 	GetSkills        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetSkills.luau"),
 	GetMoney         = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetMoney.luau"),
 	GetFrag          = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetFrag.luau"),
+	GetMastery       = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/GetMastery.luau"),
 	FpsBooter        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/FpsBooter.luau"),
 	ServerHop        = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/ServerHop.luau"),
 	AutoSelectTeam   = import("https://raw.githubusercontent.com/Pedro-20133/PedrinKaitun/refs/heads/main/Files/Services/AutoSelectTeam.luau"),
@@ -64,13 +65,19 @@ _G.Vars.Fruit            = ""
 _G.Vars.Skills.Haki      = false
 _G.Vars.Skills.Obs       = false
 _G.Vars.Skills.Soru      = false
-_G.Vars.Skills.PuloNoAr  = false
+_G.Vars.Skills.AirJump   = false
 
 _G.Vars.Status.Melee     = 1
 _G.Vars.Status.Defensa   = 1
 _G.Vars.Status.Espada    = 1
 _G.Vars.Status.Arma      = 1
 _G.Vars.Status.BloxFruit = 1
+
+_G.Server.IsSea1         = false
+_G.Server.IsSea2         = false
+_G.Server.IsSea3         = false
+
+_G.Server.IsFullMoon     = false
 
 -- Função auxiliar para obter status
 local function getAllVars()
@@ -157,6 +164,53 @@ task.spawn(function()
 	end
 end)
 
+local function UpdateFpsBoost(value)
+	
+end
+task.spawn(function()
+	while true do
+		UpdateFpsBoost(_G.Configs.FpsBoost)
+		wait(5)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if _G.Server.IsSea2 then Modules.GetTtk:TryBuyLegendarySword() end
+		wait(60)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		getAllVars()
+		wait(5)
+	end
+end)
+
+local LogiaList = {
+	"", "", "", "",
+	"", "", ""
+}
+
+task.spawn(function()
+	while true do
+		if _G.Level >= 50 then
+			local success, fruit_name = Modules.AutoRandomFruits:TryGetRandomFruit()
+			if success then
+				if LogiaList[fruit_name] then
+					Modules.AutoRandomFruits:ComerFruta(fruit_name)
+				else
+					local sucess = Modules.AutoRandomFruits:GuardarFruta(fruit_name)
+					if not sucess then Modules.AutoRandomFruits:SoltarFruta(fruit_name) end
+				end
+			end
+		end
+		
+		wait(5)
+	end
+end)
+
 if _G.Configs.Team == "Marines" then
 	Modules.AutoSelectTeam:SelectMarines()
 elseif _G.Configs.Team == "Pirates" then
@@ -173,17 +227,27 @@ end
 
 wait()
 
+Modules.AutoCods:RedeemCods()
+wait(3)
+
 if _G.Vars.Level <= 700 then
 	if _G.Configs.LevelTarget < 700 then
 		Modules.AutoLevel:FarmLevel(_G.Configs.LevelTarget)
 	else
 		Modules.AutoLevel:FarmLevel(700)
 	end
+	
+	if not _G.Vars.Skills["Haki"] then Modules.GetSkills:GetHaki() end
+	if not _G.Vars.Skills["Obs"] then Modules.GetSkills:GetObs() end
+	if not _G.Vars.Skills["Soru"] then Modules.GetSkills:GetSoru() end
+	if not _G.Vars.Skills["AirJump"] then Modules.GetSkills:GetAirJump() end
 
 	wait(0.5)
 
 	Modules.AutoQuestsSeas:StartSecondQuest()
 end
+
+wait(1)
 
 if _G.Vars.Level <= 1500 then
 	if _G.Configs.LevelTarget < 1500 then
@@ -197,14 +261,85 @@ if _G.Vars.Level <= 1500 then
 	Modules.AutoQuestsSeas:StartThirdQuest()
 end
 
+wait(1)
+
 if _G.Vars.Level <= 2800 then
 	if _G.Configs.LevelTarget < 2800 then
 		Modules.AutoLevel:FarmLevel(_G.Configs.LevelTarget)
 	else
 		Modules.AutoLevel:FarmLevel(2800)
 	end
-
-	wait(0.5)
-
-	Modules.AutoQuestsSeas:StartThirdQuest()
 end
+
+wait(1)
+
+if not _G.Vars.haveGh then
+	Modules.ServerHop:HopToSea3()
+	
+	-- Comprar estilos v1
+	if _G.Vars.Money >= 1450000 then
+		Modules.GetGh:BuyBlackLeg()
+		Modules.GetGh:BuyEletric()
+		Modules.GetGh:BuyWaterKungfu()
+	else
+		Modules.GetMoney:Farm(1450000)
+	end
+	
+	if _G.Vars.Frag >= 1500 then
+		Modules.GetGh:BuyDragonBreath()
+	else
+		Modules.GetFrag:Farm(1500)
+	end
+	
+	-- Uppar estilos v1
+	
+	Modules.GetGh:BuyBlackLeg()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyEletric()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyWaterKungfu()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	Modules.GetGh:BuyDragonBreath()
+	Modules.GetMastery.EstiloLuta:Farm(400)
+	wait(1)
+	
+	-- Comprar estilos v2
+	
+end
+
+wait(1)
+
+if _G.Vars.Level >= 2300 and not _G.Vars.haveSoulGuitar then
+	if not _G.Server.IsSea3 then Modules.ServerHop:HopToSea3() end
+	if not _G.Server.IsFullMoon then Modules.ServerHop:HopToFullMoon() end
+	Modules.GetSoulGuitar:Start()
+end
+
+wait(1)
+
+if not _G.Vars.haveTtk then
+	if _G.Vars.Money < 8000000 then Modules.GetMoney:Farm(8000000) end
+	if not _G.Server.IsSea2 then Modules.ServerHop:HopToSea2() end
+	
+	Modules.GetTtk:Start()
+end
+
+wait(1)
+
+if not _G.Vars.haveCdk then
+	if not _G.Server.IsSea3 then Modules.ServerHop:HopToSea3() end
+	
+	local haveTushita = Modules.GetCdk:CheckTushita()
+	if not haveTushita then Modules.GetCdk:StartTushita() end
+	local haveYama = Modules.GetCdk:CheckYama()
+	if not haveYama then Modules.GetCdk:StartYama() end
+	
+	if haveTushita and haveYama then
+		Modules.GetCdk:Start()
+	end
+end
+
+wait(1)
